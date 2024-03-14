@@ -9,6 +9,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: copy files via ssh key
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          port: 22
+          key: ${{ secrets.SSH_KEY }}
+          source: "."
+          target: ${{ secrets.TARGET_DIR }}
       - name: Say Hello
         uses: appleboy/ssh-action@master
         with:
@@ -18,12 +27,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "HELLO FROM SSH"
-      - name: copy files via ssh key
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          port: 22
-          key: ${{ secrets.SSH_KEY }}
-          source: "django"
-          target: ${{ secrets.TARGET_DIR }}
+      
