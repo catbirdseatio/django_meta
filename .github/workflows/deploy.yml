@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "HELLO FROM SSH"
-            ls
+            touch derp.txt
       - name: copy files via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:
