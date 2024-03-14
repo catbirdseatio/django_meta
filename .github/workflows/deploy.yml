@@ -7,6 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Say Hello
         uses: appleboy/ssh-action@master
         with:
@@ -17,8 +19,6 @@ jobs:
           script: |
             echo "HELLO FROM SSH"
             ls
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: copy files via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -26,5 +26,5 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           port: 22
           key: ${{ secrets.SSH_KEY }}
-          source: "."
+          source: "django"
           target: ${{ secrets.TARGET_DIR }}
