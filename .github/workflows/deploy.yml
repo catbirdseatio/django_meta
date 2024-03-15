@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           port: 22
           key: ${{ secrets.SSH_KEY }}
-          source: "."
+          source: "./*"
           target: ${{ secrets.TARGET_DIR }}
       - name: Say Hello
         uses: appleboy/ssh-action@master
