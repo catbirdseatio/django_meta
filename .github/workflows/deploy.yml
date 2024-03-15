@@ -9,15 +9,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: copy files via ssh key
-        uses: appleboy/scp-action@v0.1.4
+        uses: pierrickdelrieu/scp-action@v0.1.0
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          port: 22
-          key: ${{ secrets.SSH_KEY }}
-          source: "./*"
-          target: ${{ secrets.TARGET_DIR }}
+          host: ${{ secrets.DESTINATION_HOST }}
+          ssh_port: ${{ secrets.DESTINATION_SSH_PORT }}
+          ssh_username: ${{ secrets.SSH_USERNAME }}
+          ssh_key: ${{ secrets.SSH_KEY }}
+          ssh_passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source_dir: ${{ secrets.SOURCE_FOLDER }}
+          destination_dir: ${{ secrets.DESTINATION_FOLDER }}
+          rm: true
+      - name: Publish
+        uses: nogsantos/scp-deploy@master
+        with:
+            src: .
+            host: ${{ secrets.SERVER_IP }}
+            remote: ${{ secrets.TARGET_DIR }}
+            port: 22
+            user: ${{ secrets.SSH_USER }}
+            key: ${{ secrets.SSH_KEY }}
       - name: Say Hello
         uses: appleboy/ssh-action@master
         with:
