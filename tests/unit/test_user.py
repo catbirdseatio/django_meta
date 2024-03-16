@@ -24,3 +24,6 @@ class TestUser:
         assert admin_user.is_active
         assert admin_user.is_staff
         assert admin_user.is_superuser
+
+    def test___str__(self, test_user):
+        assert str(test_user) == test_user.email
