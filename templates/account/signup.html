@@ -1,6 +1,13 @@
-<h2>Sign Up</h2>
-<form method="post">
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }} - Sign Up{% endblock  %}
+
+{% block content %}
+<h2 class="has-text-centered title my-2">Sign Up</h2>
+<form method="post" novalidate>
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Sign Up</button>
+  {{ form|crispy }}
+  <button type="submit" class="button is-primary">Sign Up</button>
 </form>
+{% endblock  %}
