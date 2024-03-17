@@ -49,7 +49,7 @@ class TestAboutPage:
 
     def test_homepage_template(self, response):
         assertTemplateUsed(response, "pages/about.html")
-    
+
     def test_correct_html(self, response):
         assert f"About Page" in str(response.content)
 

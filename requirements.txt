@@ -10,3 +10,5 @@ factory-boy==3.3.0
 black==24.2.0
 django-crispy-forms==2.1
 crispy-bulma==0.11.0
+coverage==7.4.4
+black==24.2.0
