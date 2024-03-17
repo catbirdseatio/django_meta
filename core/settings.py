@@ -1,22 +1,24 @@
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-(&k528crphzuya82(z9$i%9p774*9y0#xx9k#n3xr3)c3pcgnb"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# Environment variables are pulled from the docker container
+# Uncomment the line below if using a traditional virtual environment
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
-# Application definition
+# CORE PROJECT SETTINGS
+DEBUG = env("DEBUG")
+SECRET_KEY = env("SECRET_KEY")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -73,14 +75,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",  # set in docker-compose.yml
-        "PORT": 5432,  # default postgres port
-    }
+    "default": env.db(),
 }
 
 
@@ -115,9 +110,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# STATIC FILES SETTINGS
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -139,9 +132,18 @@ CRISPY_TEMPLATE_PACK = "bulma"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# EMAIL SETTINGS
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="")
+NOTIFY_EMAIL = env("NOTIFY_EMAIL", default="")
+EMAIL_HOST = env("EMAIL_HOST", default="")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # AUTH SETTINGS
 AUTH_USER_MODEL = "accounts.CustomUser"
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # ALLAUTH SETTINGS
 AUTHENTICATION_BACKENDS = (
@@ -155,7 +157,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
-LOGIN_REDIRECT_URL = 'index'
-ACCOUNT_LOGOUT_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = "index"
+ACCOUNT_LOGOUT_REDIRECT_URL = "index"

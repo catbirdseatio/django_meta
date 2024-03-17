@@ -3,7 +3,7 @@ from tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)
-def _media_storage(settings, tmpdir) -> None:
+def media_storage(settings, tmpdir) -> None:
     settings.MEDIA_ROOT = tmpdir.strpath
 
 
