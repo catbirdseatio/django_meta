@@ -4,19 +4,26 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Create a non-root user named 'appuser'
-RUN addgroup --system appuser && adduser --system --group appuser
+# create directory for the app user
+RUN mkdir -p /home/app
 
-# Set work directory
-ENV APP_HOME=/code
+# create the app user
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
-
-RUN chown -R appuser:appuser /code
-USER appuser
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+# Copy project
+COPY . $APP_HOME
+
+RUN chown -R app:app $APP_HOME
+USER app
+

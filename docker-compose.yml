@@ -4,12 +4,11 @@ services:
     ports:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - static_volume:/code/staticfiles
     env_file:
       - .env
     volumes:
       - .:/code
+      - static_volume:/code/staticfiles
     depends_on:
       - db
   db:
