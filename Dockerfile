@@ -8,7 +8,10 @@ ENV PYTHONUNBUFFERED 1
 RUN addgroup --system appuser && adduser --system --group appuser
 
 # Set work directory
-WORKDIR /code
+ENV APP_HOME=/code
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+WORKDIR $APP_HOME
 
 RUN chown -R appuser:appuser /code
 USER appuser
