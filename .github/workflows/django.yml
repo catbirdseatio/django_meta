@@ -33,7 +33,7 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.TARGET_DIR }}
+            cd ${{ secrets.TARGET_DIRECTORY }}
             ls
             docker compose down
             docker compose up -d --build
@@ -45,5 +45,5 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.TARGET_DIR }}
+            cd ${{ secrets.TARGET_DIRECTORY }}
             docker system prune -f
