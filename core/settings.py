@@ -18,6 +18,7 @@ env = environ.Env(
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["http://0.0.0.0:8000"])
 
 
 INSTALLED_APPS = [
