@@ -1,11 +1,21 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const burger = document.querySelector(".navbar-burger")
-    const menu = document.querySelector(".navbar-menu")
+document.addEventListener("DOMContentLoaded", () => {
+  const burger = document.querySelector(".navbar-burger");
+  const menu = document.querySelector(".navbar-menu");
+  const messageButtons =
+    document.querySelectorAll(".notification .delete") || [];
 
-    if (burger !== null) {
-        burger.addEventListener('click', ()=> {
-            burger.classList.toggle('is-active')
-            menu.classList.toggle('is-active')
-        })
-    }
+  if (burger !== null) {
+    burger.addEventListener("click", () => {
+      burger.classList.toggle("is-active");
+      menu.classList.toggle("is-active");
+    });
+  }
+
+  console.log("BUTTON", messageButtons.length);
+  messageButtons.forEach((button) => {
+    const notification = button.parentNode;
+    button.addEventListener("click", () =>
+      notification.parentNode.removeChild(notification)
+    );
+  });
 });
