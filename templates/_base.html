@@ -3,20 +3,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>
       {% block title %}
         Django Meta
       {% endblock %}
     </title>
-    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
   </head>
   <body>
     {% comment %}Navbar{% endcomment %}
     <nav class="navbar is-primary has-shadow" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="{% url "index" %}"><h2 class="is-size-3">Django Meta</h2></a>
+        <a class="navbar-item" href="{% url 'index' %}"><h2 class="is-size-3">Django Meta</h2></a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
@@ -34,24 +34,42 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-                {% if user.is_authenticated %}
+              {% if user.is_authenticated %}
+                <div class="dropdown is-hoverable">
+                  <div class="dropdown-trigger">
+                    <button class="button mx-2 has-text-centered" aria-haspopup="true" aria-controls="dropdown-menu4">
+                      <span >{{ user.email }}</span>
+                      <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                    <div class="dropdown-content">
+                      <div class="dropdown-item has-text-centered">
+                        <a href="">Change Password</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <a class="button is-dark" href="{% url 'account_logout' %}"><strong>Logout</strong></a>
-                {% else %}
+              {% else %}
                 <a class="button is-dark" href="{% url 'account_signup' %}"><strong>Sign up</strong></a>
-              <a class="button is-light" href="{% url 'account_login' %}">Log in</a>
-                {% endif %}
+                <a class="button is-light" href="{% url 'account_login' %}">Log in</a>
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </nav>
     {% block hero %}
+
     {% endblock %}
-    {% include "_messages.html" %}
+    {% include '_messages.html' %}
     <div class="container is-fluid">
       {% block content %}
+
       {% endblock %}
     </div>
     <script src="{% static 'js/index.js' %}"></script>
+    <script src="https://kit.fontawesome.com/b0db48a491.js" crossorigin="anonymous"></script>
   </body>
 </html>
