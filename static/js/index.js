@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  console.log("BUTTON", messageButtons.length);
   messageButtons.forEach((button) => {
     const notification = button.parentNode;
     button.addEventListener("click", () =>
