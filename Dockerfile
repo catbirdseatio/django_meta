@@ -5,7 +5,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONUNBUFFERED=1 \
     HOME=/code 
 
-# create directory for the app user
+# create directory for the app user and add user
 RUN mkdir -p $HOME  \
     && addgroup --system app \
     && adduser --system --group app 

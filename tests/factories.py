@@ -1,6 +1,7 @@
 import factory
 from django.contrib.auth import get_user_model
 from faker import Faker
+from books.models import Book
 
 
 User = get_user_model()
@@ -23,3 +24,14 @@ class UserFactory(factory.django.DjangoModelFactory):
         if create:
             user.save()
         return user
+
+
+class BookFactory(factory.django.DjangoModelFactory):
+    author = fake.name()
+    title = fake.sentence(nb_words=4)
+    price = factory.LazyAttribute(
+        lambda x: fake.random_number(digits=2) + fake.random_number(digits=2) / 100
+    )
+
+    class Meta:
+        model = Book
