@@ -1,5 +1,5 @@
 import pytest
-from tests.factories import UserFactory, BookFactory
+from tests.factories import UserFactory, BookFactory, ReviewFactory
 
 
 @pytest.fixture(autouse=True)
@@ -15,3 +15,9 @@ def test_user():
 @pytest.fixture
 def test_book():
     yield BookFactory()
+
+@pytest.fixture
+def test_five_reviews(test_book):
+    for _ in range(5): ReviewFactory(book=test_book)
+
+    yield

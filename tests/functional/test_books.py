@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse, resolve
 from pytest_django.asserts import assertTemplateUsed, assertContains
-from tests.factories import BookFactory
+from tests.factories import BookFactory, ReviewFactory
 
 
 pytestmark = pytest.mark.django_db
@@ -45,3 +45,9 @@ class TestBookDetailView:
 
     def test_assert_template_used(self, response):
         assertTemplateUsed(response, "books/detail.html")
+    
+    def test_assert_reviews_in_template(self, test_book, test_five_reviews, response):
+        assertContains(response, '<article', 5)
+
+    def test_assert_no_reviews_in_template(self, test_book, response):
+        assertContains(response, '<p>There are no reviews.</p>')
