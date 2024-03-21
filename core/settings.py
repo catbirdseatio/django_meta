@@ -15,6 +15,7 @@ env = environ.Env(
 
 
 # CORE PROJECT SETTINGS
+S3 = env.bool("S3", default=False)
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     # local apps
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
-    'books.apps.BooksConfig'
+    "books.apps.BooksConfig",
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,10 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+
+# MEDIA SETTINGS
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # CRISPY FORMS SETTINGS
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
