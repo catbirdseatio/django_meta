@@ -9,3 +9,5 @@ media/
 .cache/*
 .cache/
 .env
+.pytest_cache
+.vscode
