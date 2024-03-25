@@ -9,7 +9,8 @@ pytestmark = pytest.mark.django_db
 
 class TestBookListView:
     @pytest.fixture(scope="function")
-    def response(self, client, test_book):
+    def response(self, client, test_book, test_user):
+        client.force_login(test_user)
         yield client.get(reverse("books:list"))
 
     def test_get_success(self, response):
@@ -28,7 +29,8 @@ class TestBookListView:
 
 class TestBookDetailView:
     @pytest.fixture(scope="function")
-    def response(self, client, test_book):
+    def response(self, client, test_book, test_user):
+        client.force_login(test_user)
         yield client.get(reverse("books:detail", args=[str(test_book.id)]))
 
     def test_get_success(self, response):
@@ -42,12 +44,12 @@ class TestBookDetailView:
 
     def test_assert_template_used(self, response):
         assertTemplateUsed(response, "books/detail.html")
-    
+
     def test_assert_reviews_in_template(self, test_book, test_five_reviews, response):
-        assertContains(response, '<article', 5)
+        assertContains(response, "<article", 5)
 
     def test_assert_no_reviews_in_template(self, test_book, response):
-        assertContains(response, '<p>There are no reviews.</p>')
+        assertContains(response, 'There are no reviews.')
 
 
 class TestSearchResultsListView:
@@ -72,4 +74,3 @@ class TestSearchResultsListView:
     def test_search_form_title(self, test_search_books_author, client):
         response = client.get(f"{self.base_url}?q=Edmund Welles")
         assertContains(response, '<h2 class="title">',5)
-    

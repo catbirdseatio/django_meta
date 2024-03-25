@@ -118,17 +118,22 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"}
 }
 
-# MEDIA SETTINGS
+
+# MEDIA FILES
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+if S3:
+    STORAGES["default"] = {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_ACCESS_KEY_ID = env("AWS_S3_ACCESS_KEY_ID")
+    AWS_S3_SECRET_ACCESS_KEY = env("AWS_S3_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+else:
+    STORAGES["default"] = {"BACKEND": "django.core.files.storage.FileSystemStorage"}
+    MEDIA_ROOT = BASE_DIR / "media"
+
 
 # CRISPY FORMS SETTINGS
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)

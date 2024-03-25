@@ -14,7 +14,15 @@ def test_user():
 
 @pytest.fixture(scope="function")
 def test_book():
-    yield BookFactory()
+    yield BookFactory(title="Test Book")
+
+
+@pytest.fixture()
+def test_five_books():
+    for _ in range(5):
+        BookFactory()
+
+    yield
 
 
 @pytest.fixture(scope="function")
@@ -30,6 +38,7 @@ def test_five_books():
 
 @pytest.fixture(scope="function")
 def test_five_reviews(test_book):
-    for _ in range(5): ReviewFactory(book=test_book)
+    for _ in range(5):
+        ReviewFactory(book=test_book)
 
     yield
