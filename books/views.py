@@ -1,17 +1,30 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
+from django.db.models import Q
 from .models import Book
 
 
-class BookListView(LoginRequiredMixin, ListView):
+class BookListView(ListView):
     model = Book
     template_name = "books/list.html"
     context_object_name = "books"
     login_url = "account_login"
 
 
-class BookDetailView(LoginRequiredMixin, DetailView):
+class BookDetailView(DetailView):
     model = Book
     template_name = "books/detail.html"
     context_object_name = "book"
-    login_url = "account_login"
+
+
+class SearchResultsListView(ListView):
+    model = Book
+    context_object_name = "books"
+    template_name = "books/search_results.html"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+
+        return Book.objects.filter(
+            Q(title__icontains=query) | Q(author__icontains=query)
+        )

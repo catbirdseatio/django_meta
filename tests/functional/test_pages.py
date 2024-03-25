@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse, resolve
-from pytest_django.asserts import assertTemplateUsed
+from pytest_django.asserts import assertTemplateUsed, assertContains
 
 from pages.views import HomePageView, AboutPageView
 
@@ -33,6 +33,9 @@ class TestHomepage:
 
     def test_incorrect_html(self, response):
         assert f"Hello! This should not be on the page." not in str(response.content)
+    
+    def test_search_form_on_page(self, response):
+        assertContains(response, '<form action="/books/search"')
 
     def test_homepage_url_resolves_homepageview(self):
         view = resolve("/")

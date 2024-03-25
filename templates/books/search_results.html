@@ -3,6 +3,7 @@
 {% block title %}{{ block.super}} - Search Results{% endblock  %}
 
 {% block content %}
+    <h2 class="title has-text-centered">Search Results</h2>
     {% for book in books %}
         <div>
             <h2 class="title"><a href="{{ book.get_absolute_url }}" class="is-link">{{ book.title }}</a></h2>
