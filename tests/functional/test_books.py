@@ -74,3 +74,7 @@ class TestSearchResultsListView:
     def test_search_form_title(self, test_search_books_author, client):
         response = client.get(f"{self.base_url}?q=Edmund Welles")
         assertContains(response, '<h2 class="title">',5)
+    
+    def test_search_form_no_results(self, test_search_books_title, client):
+        response = client.get(f"{self.base_url}?q=green")
+        assertContains(response, 'There are no results')

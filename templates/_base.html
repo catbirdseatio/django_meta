@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +22,7 @@
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
       </div>
 
@@ -39,7 +40,7 @@
                 <div class="dropdown is-hoverable">
                   <div class="dropdown-trigger">
                     <button class="button mx-2 is-primary" aria-haspopup="true" aria-controls="dropdown-menu4">
-                      <span >{{ user.email }}</span>
+                      <span>{{ user.email }}</span>
                       <span class="icon is-small"><i class="fas fa-regular fa-user"></i></span>
                     </button>
                   </div>
@@ -48,6 +49,11 @@
                       <div class="dropdown-item has-text-centered p-0">
                         <a href="{% url 'account_change_password' %}">Change Password</a>
                       </div>
+                      {% if user.is_superuser %}
+                        <div class="dropdown-item has-text-centered p-0">
+                          <a href="/admin">Admin</a>
+                        </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
