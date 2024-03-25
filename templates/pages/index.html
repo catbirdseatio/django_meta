@@ -1,6 +1,16 @@
 {% extends '_base.html' %}
 
 {% block content %}
+<form action="/books/search" method="get" class="my-3">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="q" required placeholder="Find a book" />
+    </div>
+    <div class="control">
+      <button class="button is-info">Search</button>
+    </div>
+  </div>
+</form>
   {% if user.is_authenticated %}
     Hello {{ user.email }}!<p>
       <a href="{% url 'account_logout' %}">Log Out</a>

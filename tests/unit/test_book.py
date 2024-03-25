@@ -17,3 +17,8 @@ class TestBook:
         assert test_book.get_absolute_url() == reverse(
             "books:detail", args=[str(test_book.id)]
         )
+
+
+class TestReview:
+    def test___str__(self, test_review):
+        assert str(test_review) == test_review.content

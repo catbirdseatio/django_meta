@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse, resolve
 from pytest_django.asserts import assertTemplateUsed, assertContains
-from tests.factories import BookFactory, ReviewFactory
+from tests.factories import BookFactory
 
 
 pytestmark = pytest.mark.django_db
@@ -21,12 +21,9 @@ class TestBookListView:
     def test_assert_template_used(self, response):
         assertTemplateUsed(response, "books/list.html")
 
-    def test_multiple_books(self, client):
-        for _ in range(4):
-            BookFactory()
-
+    def test_multiple_books(self, client, test_five_books):
         response = client.get(reverse("books:list"))
-        assertContains(response, "<h2", 5)
+        assertContains(response, '<h2 class="title">', 5)
 
 
 class TestBookDetailView:
@@ -51,3 +48,28 @@ class TestBookDetailView:
 
     def test_assert_no_reviews_in_template(self, test_book, response):
         assertContains(response, '<p>There are no reviews.</p>')
+
+
+class TestSearchResultsListView:
+    base_url = reverse("books:search_results")
+
+    @pytest.fixture(scope="function")
+    def test_search_books_title(self):
+        for i in range(5): BookFactory(title=f"Book {i}")
+
+        yield
+    
+    @pytest.fixture(scope="function")
+    def test_search_books_author(self):
+        for i in range(5): BookFactory(author=f"Edmund Welles")
+
+        yield
+
+    def test_search_form_title(self, test_search_books_title, client):
+        response = client.get(f"{self.base_url}?q=book")
+        assertContains(response, '<h2 class="title">',5)
+    
+    def test_search_form_title(self, test_search_books_author, client):
+        response = client.get(f"{self.base_url}?q=Edmund Welles")
+        assertContains(response, '<h2 class="title">',5)
+    
