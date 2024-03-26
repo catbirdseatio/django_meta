@@ -3,7 +3,7 @@ FROM python:3.12.1-slim-bullseye
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    HOME=/code 
+    HOME=/code/web 
 
 # create directory for the app user and add user
 RUN mkdir -p $HOME  \
