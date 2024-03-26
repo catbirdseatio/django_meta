@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bulma",
     "debug_toolbar",
+    "django_extensions",
     # local apps
     "accounts.apps.AccountsConfig",
     "pages.apps.PagesConfig",
@@ -136,10 +137,13 @@ else:
     STORAGES["default"] = {"BACKEND": "django.core.files.storage.FileSystemStorage"}
     MEDIA_ROOT = BASE_DIR / "media"
 
-  
+
 # CRISPY FORMS SETTINGS
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bulma",)
 CRISPY_TEMPLATE_PACK = "bulma"
+
+# SHELL PLUS SETTINGS
+SHELL_PLUS = "ipython"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -180,4 +184,3 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "index"
 if DEBUG:
     # `debug` is only True in templates if the vistor IP is in INTERNAL_IPS.
     INTERNAL_IPS = type("c", (), {"__contains__": lambda *a: True})()
-    

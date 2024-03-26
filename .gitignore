@@ -12,3 +12,4 @@ media/
 .vscode
 .pytest_cache
 .env
+.ipython/
