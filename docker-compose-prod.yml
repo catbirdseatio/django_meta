@@ -10,14 +10,6 @@ services:
       - static_volume:/code/web/staticfiles
     environment:
       - DEBUG=False
-    depends_on:
-      - db
-  db:
-    image: postgres:16
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
   nginx:
     build: ./nginx
     volumes:
@@ -28,5 +20,4 @@ services:
       - web
 
 volumes:
-  postgres_data:
   static_volume:
