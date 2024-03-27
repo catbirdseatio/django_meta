@@ -7,6 +7,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
 
 # create directory for the app user and add user
 RUN mkdir -p $HOME  \
+    && mkdir $HOME/staticfiles \
     && addgroup --system app \
     && adduser --system --group app 
 

@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./web/:/code/web
+      - static_volume:/code/web/staticfiles
     environment:
       - DEBUG=False
     depends_on:
@@ -20,6 +20,8 @@ services:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
   nginx:
     build: ./nginx
+    volumes:
+      - static_volume:/code/web/staticfiles
     ports:
       - 1337:80
     depends_on:
@@ -27,3 +29,4 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
