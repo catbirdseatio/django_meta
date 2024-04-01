@@ -11,7 +11,7 @@ services:
     environment:
       - DEBUG=False
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.internal:172.17.0.1"
   nginx:
     build: ./nginx
     volumes:
