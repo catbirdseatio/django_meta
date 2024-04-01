@@ -10,8 +10,6 @@ services:
       - static_volume:/code/web/staticfiles
     environment:
       - DEBUG=False
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
   nginx:
     build: ./nginx
     volumes:
