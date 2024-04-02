@@ -10,8 +10,6 @@ services:
       - static_volume:/code/web/staticfiles
     environment:
       - DEBUG=False
-    depends_on:
-      - db
     extra_hosts: 
       - "database:172.17.0.1"
   nginx:
