@@ -14,7 +14,9 @@ RUN mkdir -p $HOME  \
 WORKDIR $HOME
 
 COPY ./requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    && apt-get update -y \
+    && apt-get install -y iputils-ping
 
 # Copy project
 COPY . $HOME
