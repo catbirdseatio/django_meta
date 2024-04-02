@@ -12,6 +12,8 @@ services:
       - DEBUG=False
     depends_on:
       - db
+    extra_hosts: 
+      - "database:172.17.0.1"
   nginx:
     build: ./nginx
     volumes:
